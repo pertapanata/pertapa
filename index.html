@@ -3,27 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PERTAPA - Perencanaan Dinas Pertanian dan Pangan</title>
+  <title>PERTAPA - Dokumen Perencanaan Dinas Pertanian dan Pangan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; background: #f0f5f1; margin: 0; padding: 24px; color: #1b3a26; }
-    .box { max-width: 480px; margin: 0 auto; text-align: center; }
-    h1 { font-size: 22px; margin-bottom: 4px; }
-    p { margin-top: 0; color: #4a6a55; }
-    a.btn { display: block; background: #2e7d32; color: #fff; text-decoration: none;
-            padding: 14px; margin: 10px 0; border-radius: 10px; font-weight: bold; }
-    a.btn:hover { background: #1b5e20; }
+    :root {
+      --padi: #1f5a34;
+      --padi-gelap: #123a21;
+      --daun: #e3f1de;
+      --emas: #f2b632;
+      --tanah: #fbfaf5;
+      --teks: #17311f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Figtree', Arial, sans-serif;
+      color: var(--teks);
+      background-color: var(--daun);
+      /* coretan sapi, ayam, padi, wortel */
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27180%27%20height%3D%27180%27%20viewBox%3D%270%200%20180%20180%27%3E%0A%3Cg%20fill%3D%27none%27%20stroke%3D%27rgb%2831%2C90%2C52%29%27%20stroke-opacity%3D%27.17%27%20stroke-width%3D%272.2%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%0A%3Cpath%20d%3D%27M22%2030q-9-6-13%200%204%209%2013%205%27%2F%3E%3Cpath%20d%3D%27M58%2030q9-6%2013%200-4%209-13%205%27%2F%3E%0A%3Crect%20x%3D%2722%27%20y%3D%2722%27%20width%3D%2736%27%20height%3D%2736%27%20rx%3D%2715%27%2F%3E%3Crect%20x%3D%2727%27%20y%3D%2742%27%20width%3D%2726%27%20height%3D%2716%27%20rx%3D%278%27%2F%3E%0A%3Ccircle%20cx%3D%2735%27%20cy%3D%2750%27%20r%3D%271.2%27%2F%3E%3Ccircle%20cx%3D%2745%27%20cy%3D%2750%27%20r%3D%271.2%27%2F%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2735%27%20r%3D%271.2%27%2F%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2735%27%20r%3D%271.2%27%2F%3E%0A%3Ccircle%20cx%3D%27130%27%20cy%3D%2746%27%20r%3D%2716%27%2F%3E%3Cpath%20d%3D%27M123%2031q2-9%206-2%202-9%207-1%27%2F%3E%3Cpath%20d%3D%27M146%2044l9%203-9%203%27%2F%3E%3Ccircle%20cx%3D%27126%27%20cy%3D%2742%27%20r%3D%271.2%27%2F%3E%0A%3Cpath%20d%3D%27M40%20165V112%27%2F%3E%3Cpath%20d%3D%27M40%20128q-11-4-13-13%2011%200%2013%2013M40%20128q11-4%2013-13-11%200-13%2013M40%20144q-11-4-13-13%2011%200%2013%2013M40%20144q11-4%2013-13-11%200-13%2013%27%2F%3E%3Cpath%20d%3D%27M40%20112q-5-9%200-16%205%207%200%2016%27%2F%3E%0A%3Cpath%20d%3D%27M120%20118h26l-13%2042z%27%2F%3E%3Cpath%20d%3D%27M133%20118q-7-13-2-17M133%20118q0-14%204-17M133%20118q7-11%2013-10%27%2F%3E%0A%3C%2Fg%3E%3C%2Fsvg%3E");
+      background-size: 180px 180px;
+    }
+    header {
+      position: relative;
+      overflow: hidden;
+      background: var(--padi-gelap);
+      color: #fff;
+      text-align: center;
+      padding: 48px 20px 64px;
+      border-bottom: 8px solid var(--emas);
+    }
+    .awan { position: absolute; animation: lewat 60s linear infinite; }
+    .a1 { top: 18px; left: -140px; }
+    .a2 { top: 70px; left: -140px; animation-duration: 90s; animation-delay: -35s; }
+    @keyframes lewat { to { transform: translateX(calc(100vw + 300px)); } }
+    @media (prefers-reduced-motion: reduce) { .awan { animation: none; left: 12%; } }
+    .lambang { position: relative; display: block; margin: 0 auto 16px; }
+    h1 {
+      position: relative;
+      font-family: 'Bricolage Grotesque', Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 9vw, 64px);
+      letter-spacing: .04em;
+      margin: 0;
+    }
+    header p { position: relative; margin: 8px 0 0; font-size: 17px; opacity: .85; }
+    main { position: relative; z-index: 1; max-width: 520px; margin: -32px auto 0; padding: 0 16px 230px; }
+    .daftar { display: grid; gap: 12px; }
+    a.item {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--tanah);
+      color: var(--teks);
+      text-decoration: none;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border-left: 8px solid var(--padi);
+      box-shadow: 0 2px 0 rgba(18,58,33,.14);
+      transition: transform .15s, border-color .15s, background .15s;
+    }
+    a.item:hover, a.item:focus-visible {
+      transform: translateX(6px);
+      border-left-color: var(--emas);
+      background: #fff;
+      outline: none;
+    }
+    a.item:focus-visible { box-shadow: 0 0 0 3px var(--emas); }
+    .tahun {
+      font-family: 'Bricolage Grotesque', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 30px;
+      color: var(--padi);
+      min-width: 86px;
+    }
+    .ket { flex: 1; }
+    .ket strong { display: block; font-size: 17px; }
+    .ket span { font-size: 14px; opacity: .7; }
+    .ikon { flex: none; color: var(--padi); }
+    /* pemandangan ladang di dasar halaman */
+    .ladang {
+      position: fixed; left: 0; bottom: 0;
+      width: 100%; height: 200px;
+      z-index: 0; pointer-events: none;
+    }
+    footer {
+      position: fixed; z-index: 2; left: 0; right: 0; bottom: 6px;
+      text-align: center; font-size: 13px; font-weight: 600; color: #fff;
+      text-shadow: 0 1px 2px rgba(18,58,33,.6);
+    }
   </style>
 </head>
 <body>
-  <div class="box">
+  <header>
+    <svg class="awan a1" viewBox="0 0 120 50" width="120" aria-hidden="true"><path d="M20 46a16 16 0 0 1 2-32 22 22 0 0 1 42-4 18 18 0 0 1 30 14 14 14 0 0 1 6 22z" fill="#fff" fill-opacity=".16"/></svg>
+    <svg class="awan a2" viewBox="0 0 120 50" width="90" aria-hidden="true"><path d="M20 46a16 16 0 0 1 2-32 22 22 0 0 1 42-4 18 18 0 0 1 30 14 14 14 0 0 1 6 22z" fill="#fff" fill-opacity=".16"/></svg>
+    <svg class="lambang" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="#f2b632"/>
+      <path d="M50 64V24" stroke="#123a21" stroke-width="3" stroke-linecap="round"/>
+      <g fill="#1f5a34">
+        <ellipse cx="50" cy="20" rx="3.5" ry="7"/>
+        <ellipse cx="43" cy="31" rx="3.5" ry="7" transform="rotate(-35 43 31)"/>
+        <ellipse cx="57" cy="31" rx="3.5" ry="7" transform="rotate(35 57 31)"/>
+        <ellipse cx="42" cy="43" rx="3.5" ry="7" transform="rotate(-35 42 43)"/>
+        <ellipse cx="58" cy="43" rx="3.5" ry="7" transform="rotate(35 58 43)"/>
+        <ellipse cx="42" cy="55" rx="3.5" ry="7" transform="rotate(-35 42 55)"/>
+        <ellipse cx="58" cy="55" rx="3.5" ry="7" transform="rotate(35 58 55)"/>
+      </g>
+      <path d="M15 66Q33 59 50 66V86Q33 79 15 86Z" fill="#123a21"/>
+      <path d="M85 66Q67 59 50 66V86Q67 79 85 86Z" fill="#fbfaf5" stroke="#123a21" stroke-width="2"/>
+      <path d="M58 72Q67 69 77 72M58 78Q67 75 77 78" stroke="#1f5a34" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    </svg>
     <h1>PERTAPA</h1>
     <p>Dokumen Perencanaan Dinas Pertanian dan Pangan</p>
-    <a class="btn" href="https://drive.google.com/drive/folders/10Vc0UO37VgGEzRsfqPTTFy-Ye8mPXN4T">DOKUMEN 2023</a>
-    <a class="btn" href="https://drive.google.com/drive/folders/1Kssm38uSy5EKWE0besSKQMNAzQGKfS89">DOKUMEN 2024</a>
-    <a class="btn" href="https://drive.google.com/drive/folders/1kzXcMSt7lbH-NO_YygssvOT3CsjCvZz1">DOKUMEN 2025</a>
-    <a class="btn" href="https://drive.google.com/drive/folders/14peh0Rnb35uK0zpumWkyne3C7i3IeTv6">DOKUMEN 2026</a>
-    <a class="btn" href="https://drive.google.com/drive/folders/1PGuYWqgiWXJ8zkZAm9M7oUM5oSIUhskx">DOKUMEN 2027</a>
-    <a class="btn" href="https://drive.google.com/drive/folders/1D2JGsVmpBBAHQNbqQ2Qq4_EtlL1NLxLB">DOKUMEN 2028</a>
-  </div>
+  </header>
+
+  <main>
+    <div class="daftar">
+      <a class="item" href="https://drive.google.com/drive/folders/10Vc0UO37VgGEzRsfqPTTFy-Ye8mPXN4T?usp=drive_link">
+        <span class="tahun">2023</span>
+        <span class="ket"><strong>Dokumen 2023</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+      <a class="item" href="https://drive.google.com/drive/folders/1Kssm38uSy5EKWE0besSKQMNAzQGKfS89?usp=drive_link">
+        <span class="tahun">2024</span>
+        <span class="ket"><strong>Dokumen 2024</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+      <a class="item" href="https://drive.google.com/drive/folders/1kzXcMSt7lbH-NO_YygssvOT3CsjCvZz1?usp=drive_link">
+        <span class="tahun">2025</span>
+        <span class="ket"><strong>Dokumen 2025</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+      <a class="item" href="https://drive.google.com/drive/folders/14peh0Rnb35uK0zpumWkyne3C7i3IeTv6?usp=drive_link">
+        <span class="tahun">2026</span>
+        <span class="ket"><strong>Dokumen 2026</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+      <a class="item" href="https://drive.google.com/drive/folders/1PGuYWqgiWXJ8zkZAm9M7oUM5oSIUhskx?usp=drive_link">
+        <span class="tahun">2027</span>
+        <span class="ket"><strong>Dokumen 2027</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+      <a class="item" href="https://drive.google.com/drive/folders/1D2JGsVmpBBAHQNbqQ2Qq4_EtlL1NLxLB?usp=drive_link">
+        <span class="tahun">2028</span>
+        <span class="ket"><strong>Dokumen 2028</strong><span>Buka folder di Google Drive</span></span>
+        <svg class="ikon" viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5C4.7 19 4 18.3 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/><path d="M6.5 8H9M6.5 11H9M15 8h2.5M15 11h2.5"/></svg>
+      </a>
+    </div>
+  </main>
+
+  <svg class="ladang" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0 150Q300 90 600 140T1200 120V220H0Z" fill="#b9dba8"/>
+    <path d="M0 190Q250 140 520 180T1200 165V220H0Z" fill="#8cc56f"/>
+    <!-- lumbung & silo -->
+    <rect x="228" y="108" width="28" height="82" fill="#d9d4c7"/><ellipse cx="242" cy="108" rx="14" ry="9" fill="#bdb7a8"/>
+    <rect x="120" y="125" width="96" height="65" fill="#c0392b"/>
+    <polygon points="110,127 168,86 226,127" fill="#8e2a20"/>
+    <rect x="153" y="152" width="30" height="38" fill="#f7e9d0"/>
+    <path d="M153 152l30 38M183 152l-30 38" stroke="#c0392b" stroke-width="3"/>
+    <!-- pagar -->
+    <g stroke="#a9794a" stroke-width="5" stroke-linecap="round">
+      <path d="M330 168v28M370 166v28M410 165v28M450 164v28M490 165v28"/>
+      <path d="M322 176H498M322 188H498" stroke-width="4"/>
+    </g>
+    <!-- ayam -->
+    <g transform="translate(640 150)">
+      <ellipse cx="0" cy="22" rx="20" ry="16" fill="#fff"/>
+      <circle cx="16" cy="6" r="10" fill="#fff"/>
+      <path d="M26 6l10 4-10 4z" fill="#f2b632"/>
+      <path d="M12 -4q2-8 6-2 3-6 6 1" fill="#d94b3d"/>
+      <circle cx="19" cy="4" r="1.6" fill="#17311f"/>
+      <path d="M-18 18q-12-6-8-16 6 6 12 8z" fill="#e9e4d6"/>
+      <path d="M-4 38v10M6 38v10" stroke="#f2b632" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- sapi -->
+    <g transform="translate(850 140)">
+      <rect x="0" y="12" width="82" height="38" rx="14" fill="#fff" stroke="#17311f" stroke-width="2.5"/>
+      <path d="M14 16q10-4 16 6t-10 14-16-8z" fill="#3b3b3b"/>
+      <path d="M52 30q10-8 18 2t-8 14z" fill="#3b3b3b"/>
+      <rect x="10" y="48" width="9" height="22" rx="3" fill="#fff" stroke="#17311f" stroke-width="2.5"/>
+      <rect x="62" y="48" width="9" height="22" rx="3" fill="#fff" stroke="#17311f" stroke-width="2.5"/>
+      <rect x="72" y="0" width="30" height="30" rx="12" fill="#fff" stroke="#17311f" stroke-width="2.5"/>
+      <rect x="78" y="14" width="24" height="16" rx="7" fill="#f6c6cc" stroke="#17311f" stroke-width="2"/>
+      <circle cx="84" cy="8" r="1.8" fill="#17311f"/><circle cx="96" cy="8" r="1.8" fill="#17311f"/>
+      <path d="M76 2q-8-6-12 0 2 8 12 4M98 2q8-6 12 0-2 8-12 4" fill="#fff" stroke="#17311f" stroke-width="2"/>
+    </g>
+    <!-- tanaman -->
+    <g stroke="#1f5a34" stroke-width="3" stroke-linecap="round" fill="none">
+      <path d="M1040 200V160M1060 202V158M1080 200V162M1100 202V158M1120 200V160"/>
+      <path d="M1040 170q-8-4-8-12M1040 170q8-4 8-12M1060 168q-8-4-8-12M1060 168q8-4 8-12M1080 172q-8-4-8-12M1080 172q8-4 8-12M1100 168q-8-4-8-12M1100 168q8-4 8-12M1120 170q-8-4-8-12M1120 170q8-4 8-12"/>
+    </g>
+  </svg>
+
+  <footer>Pertanian · Pangan · Peternakan</footer>
 </body>
 </html>
