@@ -53,8 +53,9 @@
     header p { position: relative; margin: 8px 0 0; font-size: 17px; opacity: .85; }
     main { position: relative; z-index: 1; max-width: 520px; margin: -32px auto 0; padding: 0 16px 230px; }
     .daftar { display: grid; gap: 12px; }
-    a.item {
+    .item {
       display: flex; align-items: center; gap: 16px;
+      width: 100%; border: 0; font: inherit; text-align: left; cursor: pointer;
       background: var(--tanah);
       color: var(--teks);
       text-decoration: none;
@@ -64,13 +65,13 @@
       box-shadow: 0 2px 0 rgba(18,58,33,.14);
       transition: transform .15s, border-color .15s, background .15s;
     }
-    a.item:hover, a.item:focus-visible {
+    .item:hover, .item:focus-visible {
       transform: translateX(6px);
       border-left-color: var(--emas);
       background: #fff;
       outline: none;
     }
-    a.item:focus-visible { box-shadow: 0 0 0 3px var(--emas); }
+    .item:focus-visible { box-shadow: 0 0 0 3px var(--emas); }
     .tahun {
       font-family: 'Bricolage Grotesque', Arial, sans-serif;
       font-weight: 800;
@@ -82,6 +83,22 @@
     .ket strong { display: block; font-size: 17px; }
     .ket span { font-size: 14px; opacity: .7; }
     .ikon { flex: none; color: var(--padi); }
+
+    /* panah & submenu */
+    .panah { transition: transform .2s; }
+    .item[aria-expanded="true"] .panah { transform: rotate(180deg); }
+    .item[aria-expanded="true"] { border-left-color: var(--emas); background: #fff; }
+    .submenu { display: grid; gap: 8px; margin: 8px 0 4px 20px; }
+    .submenu[hidden] { display: none; }
+    .submenu a, .submenu .info {
+      display: block; padding: 12px 16px; border-radius: 10px;
+      background: #fff; color: var(--teks); text-decoration: none;
+      border-left: 5px solid var(--emas); font-weight: 600; font-size: 15px;
+    }
+    .submenu a:hover, .submenu a:focus-visible { background: var(--daun); outline: none; }
+    .submenu a.utama { border-left-color: var(--padi); color: var(--padi); }
+    .submenu .info { font-weight: 400; opacity: .7; border-left-color: transparent; }
+
     /* pemandangan ladang di dasar halaman */
     .ladang {
       position: fixed; left: 0; bottom: 0;
@@ -120,32 +137,7 @@
   </header>
 
   <main>
-    <div class="daftar">
-  <a class="item" href="https://drive.google.com/drive/folders/10Vc0UO37VgGEzRsfqPTTFy-Ye8mPXN4T?usp=drive_link">
-    <span class="tahun">2023 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-  <a class="item" href="https://drive.google.com/drive/folders/1Kssm38uSy5EKWE0besSKQMNAzQGKfS89?usp=drive_link">
-    <span class="tahun">2024 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-  <a class="item" href="https://drive.google.com/drive/folders/1kzXcMSt7lbH-NO_YygssvOT3CsjCvZz1?usp=drive_link">
-    <span class="tahun">2025 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-  <a class="item" href="https://drive.google.com/drive/folders/14peh0Rnb35uK0zpumWkyne3C7i3IeTv6?usp=drive_link">
-    <span class="tahun">2026 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-  <a class="item" href="https://drive.google.com/drive/folders/1PGuYWqgiWXJ8zkZAm9M7oUM5oSIUhskx?usp=drive_link">
-    <span class="tahun">2027 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-  <a class="item" href="https://drive.google.com/drive/folders/1D2JGsVmpBBAHQNbqQ2Qq4_EtlL1NLxLB?usp=drive_link">
-    <span class="tahun">2028 🗂️</span>
-    <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
-  </a>
-</div>
+    <div class="daftar" id="daftar"></div>
   </main>
 
   <svg class="ladang" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
@@ -192,5 +184,82 @@
   </svg>
 
   <footer>Dinas Pertanian dan Pangan Kabupaten Gunungkidul</footer>
+
+  <script>
+    // >>> GANTI baris ini dengan Web app URL dari Apps Script (berakhiran /exec)
+    const API = 'https://script.google.com/macros/s/AKfycbx5WRLbslA9nf9vB-RCwOzPBYRwYZHHAJIrm--8kAY7vYIp_hsWkWsa_igoSn2hyGkv/exec';
+
+    const TAHUN = [
+      { t: 2023, id: '10Vc0UO37VgGEzRsfqPTTFy-Ye8mPXN4T' },
+      { t: 2024, id: '1Kssm38uSy5EKWE0besSKQMNAzQGKfS89' },
+      { t: 2025, id: '1kzXcMSt7lbH-NO_YygssvOT3CsjCvZz1' },
+      { t: 2026, id: '14peh0Rnb35uK0zpumWkyne3C7i3IeTv6' },
+      { t: 2027, id: '1PGuYWqgiWXJ8zkZAm9M7oUM5oSIUhskx' },
+      { t: 2028, id: '1D2JGsVmpBBAHQNbqQ2Qq4_EtlL1NLxLB' }
+    ];
+
+    const daftar = document.getElementById('daftar');
+    const cache = {};
+
+    function buatLink(teks, href, kelas) {
+      const a = document.createElement('a');
+      a.textContent = teks;
+      a.href = href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      if (kelas) a.className = kelas;
+      return a;
+    }
+    function buatInfo(teks) {
+      const d = document.createElement('div');
+      d.className = 'info';
+      d.textContent = teks;
+      return d;
+    }
+
+    async function muat(id, panel, urlUtama) {
+      panel.replaceChildren(buatInfo('Memuat folder…'));
+      try {
+        if (!cache[id]) {
+          const r = await fetch(`${API}?id=${id}`);
+          const j = await r.json();
+          if (j.error) throw new Error(j.error);
+          cache[id] = j.folders;
+        }
+        panel.replaceChildren(buatLink('📂 Buka folder utama', urlUtama, 'utama'));
+        cache[id].forEach(f => panel.append(buatLink('📁 ' + f.name, f.url)));
+        if (!cache[id].length) panel.append(buatInfo('Belum ada subfolder.'));
+      } catch (e) {
+        panel.replaceChildren(
+          buatInfo('Gagal memuat daftar folder.'),
+          buatLink('📂 Buka folder utama', urlUtama, 'utama')
+        );
+      }
+    }
+
+    TAHUN.forEach(({ t, id }) => {
+      const urlUtama = `https://drive.google.com/drive/folders/${id}?usp=drive_link`;
+      const grup = document.createElement('div');
+      grup.innerHTML = `
+        <button class="item" type="button" aria-expanded="false">
+          <span class="tahun">${t} 🗂️</span>
+          <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
+          <svg class="ikon panah" viewBox="0 0 24 24" width="22" height="22" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="submenu" hidden></div>`;
+      const tombol = grup.querySelector('.item');
+      const panel = grup.querySelector('.submenu');
+
+      tombol.addEventListener('click', () => {
+        const buka = panel.hidden;
+        panel.hidden = !buka;
+        tombol.setAttribute('aria-expanded', buka);
+        if (buka && !panel.hasChildNodes()) muat(id, panel, urlUtama);
+      });
+      daftar.append(grup);
+    });
+  </script>
 </body>
 </html>
