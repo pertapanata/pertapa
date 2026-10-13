@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🧑🏻‍🌾 PERTAPA </title>
+  <title>PERTAPA</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23f2b632'/><path d='M50 80V24' stroke='%23123a21' stroke-width='6' stroke-linecap='round'/><path d='M50 56c-12 0-16-8-16-14 10 0 16 6 16 14zM50 42c-12 0-16-8-16-14 10 0 16 6 16 14zM50 56c12 0 16-8 16-14-10 0-16 6-16 14zM50 42c12 0 16-8 16-14-10 0-16 6-16 14z' fill='%231f5a34'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
@@ -50,6 +51,7 @@
       letter-spacing: .04em;
       margin: 0;
     }
+    h1 .petani { width: .95em; height: .95em; vertical-align: -.12em; margin-right: .1em; }
     header p { position: relative; margin: 8px 0 0; font-size: 17px; opacity: .85; }
     main { position: relative; z-index: 1; max-width: 520px; margin: -32px auto 0; padding: 0 16px 230px; }
     .daftar { display: grid; gap: 12px; }
@@ -73,16 +75,22 @@
     }
     .item:focus-visible { box-shadow: 0 0 0 3px var(--emas); }
     .tahun {
+      display: flex; align-items: center; gap: 6px;
       font-family: 'Bricolage Grotesque', Arial, sans-serif;
       font-weight: 800;
       font-size: 30px;
       color: var(--padi);
-      min-width: 86px;
+      min-width: 112px;
     }
     .ket { flex: 1; }
     .ket strong { display: block; font-size: 17px; }
     .ket span { font-size: 14px; opacity: .7; }
     .ikon { flex: none; color: var(--padi); }
+
+    /* ikon SVG */
+    .ic { width: 1.1em; height: 1.1em; vertical-align: -.2em; flex: none; }
+    .tahun .ic { width: .95em; height: .95em; vertical-align: 0; }
+    .ket .ic { width: 1.15em; height: 1.15em; }
 
     /* panah & submenu */
     .panah { transition: transform .2s; }
@@ -95,9 +103,81 @@
       background: #fff; color: var(--teks); text-decoration: none;
       border-left: 5px solid var(--emas); font-weight: 600; font-size: 15px;
     }
+    .submenu a { display: flex; align-items: center; gap: 10px; }
+    .submenu a .ic { width: 22px; height: 22px; vertical-align: 0; }
     .submenu a:hover, .submenu a:focus-visible { background: var(--daun); outline: none; }
     .submenu a.utama { border-left-color: var(--padi); color: var(--padi); }
     .submenu .info { font-weight: 400; opacity: .7; border-left-color: transparent; }
+
+    /* papan pengumuman gantung di pojok atas */
+    .gantung {
+      position: absolute; top: 0; right: 18px; z-index: 3;
+      width: min(240px, 46vw);
+    }
+    .gantung.kiri { right: auto; left: 18px; }
+    .ayun {
+      position: relative; padding-top: 34px;
+      transform-origin: 50% 0;
+      animation: ayun 4s ease-in-out infinite alternate;
+      cursor: pointer;
+    }
+    .ayun.tuing { animation: tuing 1.8s ease-out; }
+    .tali {
+      position: absolute; top: 0; height: 44px; width: 4px; border-radius: 2px;
+      background: repeating-linear-gradient(45deg, #b08d57 0 3px, #8a6a3f 3px 6px);
+    }
+    .tali::before {
+      content: ""; position: absolute; top: -3px; left: -3px;
+      width: 10px; height: 10px; border-radius: 50%; background: #3b2412;
+    }
+    .tali.t1 { left: 20%; }
+    .tali.t2 { right: 20%; }
+    @keyframes ayun { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+    @keyframes tuing {
+      0%   { transform: rotate(0); }
+      15%  { transform: rotate(14deg); }
+      35%  { transform: rotate(-10deg); }
+      55%  { transform: rotate(6deg); }
+      75%  { transform: rotate(-3deg); }
+      100% { transform: rotate(0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .ayun, .ayun.tuing { animation: none; } }
+    .kayu {
+      position: relative; z-index: 1;
+      padding: 18px 20px 20px;
+      color: #3b2412;
+      border: 4px solid #5a3a1d;
+      border-radius: 10px;
+      background:
+        radial-gradient(circle at 13px 13px, #2e1c0d 0 3px, transparent 4px),
+        radial-gradient(circle at calc(100% - 13px) 13px, #2e1c0d 0 3px, transparent 4px),
+        radial-gradient(circle at 13px calc(100% - 13px), #2e1c0d 0 3px, transparent 4px),
+        radial-gradient(circle at calc(100% - 13px) calc(100% - 13px), #2e1c0d 0 3px, transparent 4px),
+        repeating-linear-gradient(180deg, #c99a62 0 38px, #b07f48 38px 40px);
+      box-shadow: 0 3px 0 rgba(18,58,33,.25);
+    }
+    .kayu h2 {
+      margin: 0 0 10px; text-align: center;
+      font-family: 'Bricolage Grotesque', Arial, sans-serif;
+      font-weight: 800; font-size: 20px; letter-spacing: .06em;
+      color: #3b2412;
+    }
+    .kertas {
+      background: var(--tanah);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 15px; line-height: 1.5;
+      box-shadow: 0 2px 0 rgba(59,36,18,.25);
+    }
+    .kertas p { margin: 0; }
+    .kertas p + p { margin-top: 8px; }
+    @media (max-width: 600px) {
+      .gantung { width: 150px; right: 10px; }
+      .gantung.kiri { left: 10px; }
+      .kayu { padding: 10px 10px 12px; }
+      .kayu h2 { font-size: 13px; margin-bottom: 6px; }
+      .kertas { font-size: 12px; padding: 8px 9px; }
+    }
 
     /* pemandangan ladang di dasar halaman */
     .ladang {
@@ -113,6 +193,40 @@
   </style>
 </head>
 <body>
+  <!-- kumpulan ikon (sprite) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- folder kuning -->
+    <symbol id="i-folder" viewBox="0 0 32 32">
+      <path d="M3 8a3 3 0 0 1 3-3h7l3 3h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#e0a21c"/>
+      <path d="M3 13a3 3 0 0 1 3-3h20a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#f7c948"/>
+      <path d="M9 16h7" stroke="#e5534b" stroke-width="2" stroke-linecap="round"/>
+      <path d="M9 20h11" stroke="#4a90d9" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <!-- folder hijau (untuk "Buka folder utama") -->
+    <symbol id="i-folder-buka" viewBox="0 0 32 32">
+      <path d="M3 8a3 3 0 0 1 3-3h7l3 3h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#2e7d4f"/>
+      <path d="M3 13a3 3 0 0 1 3-3h20a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#5fb36f"/>
+    </symbol>
+    <!-- tunas -->
+    <symbol id="i-tunas" viewBox="0 0 32 32">
+      <path d="M5 28q11-8 22 0z" fill="#8b5a2b"/>
+      <path d="M16 27V14" stroke="#4f9a3a" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M16 16C16 9 10 6 4 7c0 6 5 10 12 9z" fill="#6dbb4a"/>
+      <path d="M16 14c0-6 5-9 12-9 0 7-5 11-12 9z" fill="#8fd16a"/>
+    </symbol>
+    <!-- sapi -->
+    <symbol id="i-sapi" viewBox="0 0 32 32">
+      <path d="M9 9Q4 5 3 10q1 4 6 4M23 9q5-4 6 1-1 4-6 4" fill="#f4e3b2" stroke="#17311f" stroke-width="1.2"/>
+      <ellipse cx="5" cy="16" rx="4" ry="2.5" fill="#fff" stroke="#17311f" stroke-width="1.2" transform="rotate(-20 5 16)"/>
+      <ellipse cx="27" cy="16" rx="4" ry="2.5" fill="#fff" stroke="#17311f" stroke-width="1.2" transform="rotate(20 27 16)"/>
+      <rect x="8" y="7" width="16" height="21" rx="7" fill="#fff" stroke="#17311f" stroke-width="1.4"/>
+      <path d="M9 10q5-2 7 2t-4 5q-4-1-3-7z" fill="#3b3b3b"/>
+      <rect x="10" y="19" width="12" height="8" rx="4" fill="#f6c6cc" stroke="#17311f" stroke-width="1.2"/>
+      <circle cx="13.5" cy="23.5" r="1" fill="#17311f"/><circle cx="18.5" cy="23.5" r="1" fill="#17311f"/>
+      <circle cx="12.5" cy="15" r="1.3" fill="#17311f"/><circle cx="19.5" cy="15" r="1.3" fill="#17311f"/>
+    </symbol>
+  </svg>
+
   <header>
     <svg class="awan a1" viewBox="0 0 120 50" width="120" aria-hidden="true"><path d="M20 46a16 16 0 0 1 2-32 22 22 0 0 1 42-4 18 18 0 0 1 30 14 14 14 0 0 1 6 22z" fill="#fff" fill-opacity=".16"/></svg>
     <svg class="awan a2" viewBox="0 0 120 50" width="90" aria-hidden="true"><path d="M20 46a16 16 0 0 1 2-32 22 22 0 0 1 42-4 18 18 0 0 1 30 14 14 14 0 0 1 6 22z" fill="#fff" fill-opacity=".16"/></svg>
@@ -132,15 +246,54 @@
       <path d="M85 66Q67 59 50 66V86Q67 79 85 86Z" fill="#fbfaf5" stroke="#123a21" stroke-width="2"/>
       <path d="M58 72Q67 69 77 72M58 78Q67 75 77 78" stroke="#1f5a34" stroke-width="1.8" fill="none" stroke-linecap="round"/>
     </svg>
-    <h1>🧑🏻‍🌾 PERTAPA</h1>
+    <h1><svg class="petani" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M52 14v50" stroke="#a9794a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M46 8v10a6 6 0 0 0 12 0V8M52 8v16" fill="none" stroke="#cfd6d2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 64c0-13 9-19 22-19s22 6 22 19z" fill="#2f6fb0"/>
+      <path d="M24 47l8 9 8-9q-8-4-16 0z" fill="#7bc47f"/>
+      <circle cx="32" cy="33" r="10" fill="#f1c9a5"/>
+      <ellipse cx="32" cy="26" rx="21" ry="5" fill="#e9c46a" stroke="#b8862b" stroke-width="1.5"/>
+      <path d="M21 26q0-15 11-15t11 15z" fill="#f2d27a"/>
+      <path d="M21.5 23.5h21" stroke="#c0392b" stroke-width="2.5"/>
+      <circle cx="28" cy="33" r="1.4" fill="#17311f"/><circle cx="36" cy="33" r="1.4" fill="#17311f"/>
+      <path d="M28.5 38q3.5 3 7 0" fill="none" stroke="#17311f" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="52" cy="50" r="4" fill="#f1c9a5"/>
+    </svg> PERTAPA</h1>
     <p>Dokumen Perencanaan Dinas Pertanian dan Pangan</p>
   </header>
+
+  <!-- PAPAN PENGUMUMAN GANTUNG: edit teks di dalam <p>. Pindah ke kiri: ganti class="gantung" jadi class="gantung kiri". Tidak mau? Hapus seluruh blok <aside> ini. -->
+  <aside class="gantung" aria-label="Pengumuman">
+    <div class="ayun" id="ayun">
+      <span class="tali t1"></span><span class="tali t2"></span>
+      <div class="kayu">
+        <h2>🌾 HALOO!! 🌾</h2>
+        <div class="kertas">
+          <p><strong>PS.</strong> Editor hanya dibuka di tahun 2026 & 2027, yaaa </p>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <main>
     <div class="daftar" id="daftar"></div>
   </main>
 
   <svg class="ladang" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <g id="jagung">
+        <path d="M0 0V-80" stroke="#3f8a3a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M0 -14Q-22 -34 -42 -20Q-20 -18 0 -6z" fill="#5fb34a"/>
+        <path d="M0 -34Q22 -54 40 -42Q20 -38 0 -26z" fill="#6dbb4a"/>
+        <path d="M0 -52Q-20 -70 -36 -60Q-18 -56 0 -44z" fill="#5fb34a"/>
+        <path d="M0 -66Q18 -84 34 -76Q16 -72 0 -58z" fill="#6dbb4a"/>
+        <g transform="translate(3 -30) rotate(18)">
+          <ellipse cx="0" cy="-12" rx="5.5" ry="12" fill="#f4c542"/>
+          <path d="M-6 0Q-7 -8 -2 -10L0 -8L2 -10Q7 -8 6 0z" fill="#79bf55"/>
+        </g>
+        <path d="M0 -80q-4 -14 -8 -20M0 -80v-22M0 -80q4 -14 8 -20" fill="none" stroke="#c9a64b" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </defs>
     <path d="M0 150Q300 90 600 140T1200 120V220H0Z" fill="#b9dba8"/>
     <path d="M0 190Q250 140 520 180T1200 165V220H0Z" fill="#8cc56f"/>
     <!-- lumbung & silo -->
@@ -176,17 +329,19 @@
       <circle cx="84" cy="8" r="1.8" fill="#17311f"/><circle cx="96" cy="8" r="1.8" fill="#17311f"/>
       <path d="M76 2q-8-6-12 0 2 8 12 4M98 2q8-6 12 0-2 8-12 4" fill="#fff" stroke="#17311f" stroke-width="2"/>
     </g>
-    <!-- tanaman -->
-    <g stroke="#1f5a34" stroke-width="3" stroke-linecap="round" fill="none">
-      <path d="M1040 200V160M1060 202V158M1080 200V162M1100 202V158M1120 200V160"/>
-      <path d="M1040 170q-8-4-8-12M1040 170q8-4 8-12M1060 168q-8-4-8-12M1060 168q8-4 8-12M1080 172q-8-4-8-12M1080 172q8-4 8-12M1100 168q-8-4-8-12M1100 168q8-4 8-12M1120 170q-8-4-8-12M1120 170q8-4 8-12"/>
-    </g>
+    <!-- jagung -->
+    <use href="#jagung" transform="translate(1030 205) scale(.85)"/>
+    <use href="#jagung" transform="translate(1160 205) scale(.85)"/>
+    <use href="#jagung" transform="translate(1075 207) scale(1.1)"/>
+    <use href="#jagung" transform="translate(1125 205) scale(1)"/>
+    <use href="#jagung" transform="translate(45 206) scale(.9)"/>
+    <use href="#jagung" transform="translate(82 208) scale(.8)"/>
   </svg>
 
   <footer>Dinas Pertanian dan Pangan Kabupaten Gunungkidul © 2026</footer>
 
   <script>
-    // >>> GANTI baris ini dengan Web app URL dari Apps Script (berakhiran /exec)
+    // URL Web app dari Apps Script (berakhiran /exec)
     const API = 'https://script.google.com/macros/s/AKfycbx5WRLbslA9nf9vB-RCwOzPBYRwYZHHAJIrm--8kAY7vYIp_hsWkWsa_igoSn2hyGkv/exec';
 
     const TAHUN = [
@@ -198,16 +353,29 @@
       { t: 2028, id: '1D2JGsVmpBBAHQNbqQ2Qq4_EtlL1NLxLB' }
     ];
 
+    // papan gantung: goyang "tuing" saat disentuh atau diklik
+    const ayun = document.getElementById('ayun');
+    function tuing() {
+      if (ayun.classList.contains('tuing')) return;
+      ayun.classList.add('tuing');
+      ayun.addEventListener('animationend', () => ayun.classList.remove('tuing'), { once: true });
+    }
+    ayun.addEventListener('mouseenter', tuing);
+    ayun.addEventListener('click', tuing);
+
     const daftar = document.getElementById('daftar');
     const cache = {};
 
-    function buatLink(teks, href, kelas) {
+    function buatLink(teks, href, kelas, ikon) {
       const a = document.createElement('a');
-      a.textContent = teks;
       a.href = href;
       a.target = '_blank';
       a.rel = 'noopener';
       if (kelas) a.className = kelas;
+      a.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#${ikon}"/></svg>`;
+      const s = document.createElement('span');
+      s.textContent = teks;
+      a.append(s);
       return a;
     }
     function buatInfo(teks) {
@@ -226,13 +394,13 @@
           if (j.error) throw new Error(j.error);
           cache[id] = j.folders;
         }
-        panel.replaceChildren(buatLink('📂 Buka folder utama', urlUtama, 'utama'));
-        cache[id].forEach(f => panel.append(buatLink('📁 ' + f.name, f.url)));
+        panel.replaceChildren(buatLink('Buka folder utama', urlUtama, 'utama', 'i-folder-buka'));
+        cache[id].forEach(f => panel.append(buatLink(f.name, f.url, '', 'i-folder')));
         if (!cache[id].length) panel.append(buatInfo('Belum ada subfolder.'));
       } catch (e) {
         panel.replaceChildren(
           buatInfo('Gagal memuat daftar folder.'),
-          buatLink('📂 Buka folder utama', urlUtama, 'utama')
+          buatLink('Buka folder utama', urlUtama, 'utama', 'i-folder-buka')
         );
       }
     }
@@ -242,8 +410,8 @@
       const grup = document.createElement('div');
       grup.innerHTML = `
         <button class="item" type="button" aria-expanded="false">
-          <span class="tahun">${t} 🗂️</span>
-          <span class="ket"><strong>🌱 Dokumen Perencanaan 🐄</strong></span>
+          <span class="tahun">${t}<svg class="ic" aria-hidden="true"><use href="#i-folder"/></svg></span>
+          <span class="ket"><strong><svg class="ic" aria-hidden="true"><use href="#i-tunas"/></svg> Dokumen Perencanaan <svg class="ic" aria-hidden="true"><use href="#i-sapi"/></svg></strong></span>
           <svg class="ikon panah" viewBox="0 0 24 24" width="22" height="22" fill="none"
                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
                aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
