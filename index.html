@@ -179,6 +179,26 @@
       .kertas { font-size: 12px; padding: 8px 9px; }
     }
 
+/* kotak cari */
+.cari {
+  position: relative; margin-bottom: 12px;
+}
+.cari input {
+  width: 100%; font: inherit; font-size: 16px; color: var(--teks);
+  background: var(--tanah);
+  border: 0; border-left: 8px solid var(--emas);
+  border-radius: 14px;
+  padding: 14px 18px 14px 48px;
+  box-shadow: 0 2px 0 rgba(18,58,33,.14);
+}
+.cari input::placeholder { color: var(--teks); opacity: .55; }
+.cari input:focus { outline: none; background: #fff; box-shadow: 0 0 0 3px var(--emas); }
+.cari .ic-cari {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px; color: var(--padi); pointer-events: none;
+}
+#hasil { margin: 0; }
+    
     /* pemandangan ladang di dasar halaman */
     .ladang {
       position: fixed; left: 0; bottom: 0;
@@ -249,6 +269,16 @@
   </aside>
 
   <main>
+    <div class="cari">
+  <svg class="ic-cari" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>
+  </svg>
+  <input id="cari" type="search" placeholder="Cari folder… (mis. DPPA, Renja, 2026)"
+         autocomplete="off" aria-label="Cari folder">
+</div>
+<div class="submenu" id="hasil" hidden></div>
+    
     <div class="daftar" id="daftar"></div>
   </main>
 
@@ -406,3 +436,67 @@
   </script>
 </body>
 </html>
+
+// ===== pencarian =====
+const cari = document.getElementById('cari');
+const hasil = document.getElementById('hasil');
+let semuaMuat = null;
+let nomor = 0;
+let tunda;
+
+// muat subfolder semua tahun (sekali saja, pakai cache yang sama)
+function muatSemua() {
+  if (!semuaMuat) {
+    semuaMuat = Promise.all(TAHUN.map(async ({ id }) => {
+      if (cache[id]) return;
+      const r = await fetch(`${API}?id=${id}`);
+      const j = await r.json();
+      if (j.error) throw new Error(j.error);
+      cache[id] = j.folders;
+    })).catch(e => { semuaMuat = null; throw e; });
+  }
+  return semuaMuat;
+}
+
+async function jalankanCari() {
+  const q = cari.value.trim().toLowerCase();
+  const ini = ++nomor;
+
+  if (q.length < 2) {           // kosong / terlalu pendek: kembali ke tampilan awal
+    hasil.hidden = true;
+    daftar.hidden = false;
+    return;
+  }
+
+  daftar.hidden = true;
+  hasil.hidden = false;
+  hasil.replaceChildren(buatInfo('Mencari…'));
+
+  try {
+    await muatSemua();
+  } catch (e) {
+    if (ini === nomor) hasil.replaceChildren(buatInfo('Gagal memuat data pencarian. Coba lagi.'));
+    return;
+  }
+  if (ini !== nomor) return;    // ada ketikan yang lebih baru
+
+  const kata = q.split(/\s+/);
+  const cocok = [];
+  TAHUN.forEach(({ t, id }) => {
+    const urlUtama = `https://drive.google.com/drive/folders/${id}?usp=drive_link`;
+    const semua = [{ name: 'Folder utama', url: urlUtama, utama: true }, ...(cache[id] || [])];
+    semua.forEach(f => {
+      const teks = `${t} ${f.name}`.toLowerCase();
+      if (kata.every(k => teks.includes(k))) cocok.push({ t, f });
+    });
+  });
+
+  hasil.replaceChildren();
+  if (!cocok.length) { hasil.append(buatInfo(`Tidak ada folder yang cocok dengan "${cari.value.trim()}".`)); return; }
+  cocok.forEach(({ t, f }) =>
+    hasil.append(buatLink(`${t} › ${f.name}`, f.url, f.utama ? 'utama' : '', f.utama ? 'i-folder-buka' : 'i-folder'))
+  );
+}
+
+cari.addEventListener('input', () => { clearTimeout(tunda); tunda = setTimeout(jalankanCari, 250); });
+cari.addEventListener('keydown', e => { if (e.key === 'Escape') { cari.value = ''; jalankanCari(); } });
