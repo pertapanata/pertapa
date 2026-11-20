@@ -433,11 +433,8 @@
       });
       daftar.append(grup);
     });
-  </script>
-</body>
-</html>
 
-// ===== pencarian =====
+    // ===== pencarian =====
 const cari = document.getElementById('cari');
 const hasil = document.getElementById('hasil');
 let semuaMuat = null;
@@ -500,3 +497,6 @@ async function jalankanCari() {
 
 cari.addEventListener('input', () => { clearTimeout(tunda); tunda = setTimeout(jalankanCari, 250); });
 cari.addEventListener('keydown', e => { if (e.key === 'Escape') { cari.value = ''; jalankanCari(); } });
+  </script>
+</body>
+</html>
